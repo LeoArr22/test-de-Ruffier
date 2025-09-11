@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget
 
 class VentanaBase(QWidget):
-    def __init__(self, titulo="Ventana", ancho=800, alto=500):
+    def __init__(self, titulo="Ventana", ancho=800, alto=600):
         super().__init__()
         self.setWindowTitle(titulo)
         self.setFixedSize(ancho, alto)
