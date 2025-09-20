@@ -2,12 +2,13 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLine
 from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtGui import QFont
 from clases.ventana_base import VentanaBase
+from clases.ventana_final import VentanaFinal
 
 TAM_BOTON = 300
 
 class VentanaTest(VentanaBase):
     def __init__(self):
-        super().__init__(titulo="Test de Ruffier")
+        super().__init__(titulo="Test de Ruffier", ancho=1000, alto=1000)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_timer)
         self.time = None
@@ -77,6 +78,8 @@ class VentanaTest(VentanaBase):
         self.p2_input = QLineEdit()
         self.p2_input.setFixedWidth(100)
         
+        self.boton_continuar = QPushButton("Continuar")
+        
         #Layouts  
         #--Layout Principal
         self.layout_principal = QVBoxLayout()
@@ -116,7 +119,8 @@ class VentanaTest(VentanaBase):
         self.layout_p2 = QFormLayout()
         self.layout_p2.addRow(self.p2, self.p2_input)
         self.layout_principal.addLayout(self.layout_p2)
-        
+        self.layout_principal.addWidget(self.boton_continuar, alignment=Qt.AlignCenter)
+        self.boton_continuar.clicked.connect(self.mostrar_ventana_final)
         #-- Set Layout Principal
         self.setLayout(self.layout_principal)
         
@@ -150,5 +154,17 @@ class VentanaTest(VentanaBase):
         # Cuando llega a cero, parar
         if self.time == QTime(0, 0, 0):
             self.timer.stop()
+            
+    def mostrar_ventana_final(self):
+        datos = {
+        "nombre": self.nombre_input.text(),
+        "edad": int(self.edad_input.text()),
+        "p0": self.p0_input.text(),
+        "p1": self.p1_input.text(),
+        "p2": self.p2_input.text(),
+        }
+        self.test = VentanaFinal(datos)  # crea la ventana secundaria
+        self.test.show()
+        self.close()  # cerrar la ventana principal
             
     
