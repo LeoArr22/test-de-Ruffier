@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QPushButton
 from clases.ventana_base import VentanaBase
+from clases.ventana_test import VentanaTest
 
 class VentanaBienvenida(VentanaBase):
     def __init__(self):
-        super().__init__(titulo="Bienvenida")
+        super().__init__(titulo="Bienvenida", alto=400, ancho=600)
         #widgets
         self.bienvenida = QLabel("Bienvenido Al Programa de Control de Salud")
         self.explicacion_texto = QLabel("""El Test de Ruffier es una prueba sencilla que permite valorar la capacidad de recuperación del corazón.
@@ -21,6 +22,8 @@ class VentanaBienvenida(VentanaBase):
         """)
         
         self.comenzar = QPushButton("Comenzar")
+        self.comenzar.clicked.connect(self.mostrar_ventana_test)
+
         self.layout = QVBoxLayout()
         
         self.layout.addWidget(self.bienvenida)
@@ -28,5 +31,8 @@ class VentanaBienvenida(VentanaBase):
         self.layout.addWidget(self.comenzar)
         
         self.setLayout(self.layout)
-        
-        
+
+    def mostrar_ventana_test(self):
+        self.test = VentanaTest()  # crea la ventana secundaria
+        self.test.show()
+        self.close()  # cerrar la ventana principal
