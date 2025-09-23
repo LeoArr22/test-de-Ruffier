@@ -40,11 +40,18 @@ class VentanaFinal(VentanaBase):
         #widgets
         self.indice = QLabel(f"Indice de Ruffier: {self.index}") 
         self.perfomance = QLabel(f"Rendimiento Cardiaco: {mensaje}")
+        self.boton_reiniciar = QPushButton("Reiniciar Test")
+        self.boton_reiniciar.clicked.connect(self.reiniciar)
         
         #Layout
         self.layout_principal = QVBoxLayout()
         self.layout_principal.addWidget(self.indice)
         self.layout_principal.addWidget(self.perfomance)
-        
+        self.layout_principal.addWidget(self.boton_reiniciar)
         self.setLayout(self.layout_principal)
         
+    def reiniciar(self):
+        from clases.ventana_bienvenida import VentanaBienvenida
+        self.v1 = VentanaBienvenida()  # crea una nueva instancia de la primera
+        self.v1.show()
+        self.close()

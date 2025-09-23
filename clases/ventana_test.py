@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit, QFormLayout
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit, QFormLayout, QMessageBox
 from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtGui import QFont
 from clases.ventana_base import VentanaBase
@@ -156,15 +156,46 @@ class VentanaTest(VentanaBase):
             self.timer.stop()
             
     def mostrar_ventana_final(self):
-        datos = {
-        "nombre": self.nombre_input.text(),
-        "edad": int(self.edad_input.text()),
-        "p0": self.p0_input.text(),
-        "p1": self.p1_input.text(),
-        "p2": self.p2_input.text(),
-        }
-        self.test = VentanaFinal(datos)  # crea la ventana secundaria
-        self.test.show()
-        self.close()  # cerrar la ventana principal
+        datos = self.validar_inputs()
+        if datos:  # Solo continua si la validación pasó
+            self.test = VentanaFinal(datos)
+            self.test.show()
+            self.close()
             
-    
+    def validar_inputs(self):
+        """
+        Valida los campos de entrada de la ventana de test.
+        Retorna un diccionario con los datos si son válidos, o None si falla.
+        """
+        nombre = self.nombre_input.text().strip()
+        edad = self.edad_input.text().strip()
+        p0 = self.p0_input.text().strip()
+        p1 = self.p1_input.text().strip()
+        p2 = self.p2_input.text().strip()
+
+        if not nombre:
+            self.mostrar_error("Debe ingresar un nombre")
+            return None
+
+        if not edad.isdigit():
+            self.mostrar_error("La edad debe ser un número entero")
+            return None
+
+        for i, valor in zip(["P0", "P1", "P2"], [p0, p1, p2]):
+            if not valor.isdigit():
+                self.mostrar_error(f"El valor de {i} debe ser un número entero")
+                return None
+
+        return {
+            "nombre": nombre,
+            "edad": int(edad),
+            "p0": int(p0),
+            "p1": int(p1),
+            "p2": int(p2)
+        }
+
+    def mostrar_error(self, mensaje):
+        QMessageBox.warning(self, "Error de validación", mensaje)
+
+                
+        

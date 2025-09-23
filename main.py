@@ -9,7 +9,7 @@ if __name__ == "__main__":
     with open("test-de-Ruffier/estilos/estilos.qss", "r") as f:
         app.setStyleSheet(f.read())
         
-    ventana = VentanaTest()  # Se instancia la ventana
+    ventana = VentanaBienvenida()  # Se instancia la ventana
     ventana.show()    # Se muestra en pantalla
 
     app.exec_()  # Se ejecuta el loop principal

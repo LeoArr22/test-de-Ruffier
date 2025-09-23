@@ -1,25 +1,14 @@
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QPushButton
 from clases.ventana_base import VentanaBase
 from clases.ventana_test import VentanaTest
+from recursos.instrucciones import ventana_bienvenida
 
 class VentanaBienvenida(VentanaBase):
     def __init__(self):
         super().__init__(titulo="Bienvenida", alto=400, ancho=600)
         #widgets
-        self.bienvenida = QLabel("Bienvenido Al Programa de Control de Salud")
-        self.explicacion_texto = QLabel("""El Test de Ruffier es una prueba sencilla que permite valorar la capacidad de recuperación del corazón.
-
-        Procedimiento:
-        - Permanecer en reposo durante 5 minutos.
-        - Medir el pulso en reposo durante 15 segundos (P0).
-        - Realizar 30 sentadillas en 45 segundos.
-        - Medir el pulso inmediatamente después del esfuerzo (P1).
-        - Un minuto después, medir nuevamente el pulso (P2).
-
-        Con estas mediciones se calcula el Índice de Ruffier, que indica la condición física:
-        - Índice bajo → buena condición física.
-        - Índice alto → fatiga rápida y baja tolerancia al esfuerzo.
-        """)
+        self.bienvenida = QLabel(ventana_bienvenida['bienvenida'])
+        self.explicacion_texto = QLabel(ventana_bienvenida['explicacion'])
         
         self.comenzar = QPushButton("Comenzar")
         self.comenzar.clicked.connect(self.mostrar_ventana_test)
